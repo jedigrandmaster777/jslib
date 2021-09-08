@@ -215,18 +215,14 @@ pjs.loadEventListeners = function(){
 	if(pjs.draw !== pjs.template3){
 		pjs.drawId = setInterval(pjs.draw, 33);
 		pjs.template3 = null;
-	} else {
-		if(pjs.debug){
-			console.log("draw has not been defined");
-		}
+	} else if(pjs.debug){
+		console.log("draw has not been defined");
 	}
 	if(pjs.mouseClicked !== pjs.mouseClickedTemplate){
 		document.addEventListener("mousedown", pjs.mouseClicked);
 		pjs.mouseClickedTemplate = null;
-	} else {
-		if(pjs.debug){
-			console.log("mouseClicked has not been defined");
-		}
+	} else if(pjs.debug){
+		console.log("mouseClicked has not been defined");
 	}
 	window.removeEventListener("load", pjs.loadEventListeners);
 	pjs.loadEventListenerIsActive = false;
