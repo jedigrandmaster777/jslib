@@ -174,7 +174,7 @@ pjs.keys = [];
 
 pjs.internalKeyPressListener = function(e){
 	if(pjs.keyPressed !== pjs.template){
-		pjs.keyPressed(e);
+		pjs.keyPressed(e.key);
 	}
 	if(pjs.keys[e.key] !== true){
 		pjs.keys[e.key] = true;
@@ -182,7 +182,7 @@ pjs.internalKeyPressListener = function(e){
 }
 pjs.internalKeyReleaseListener = function(e){
 	if(pjs.keyReleased !== pjs.template2){
-		pjs.keyReleased(e);
+		pjs.keyReleased(e.key);
 	}
 	if(pjs.keys[e.key] !== false){
 		pjs.keys[e.key] = false;
