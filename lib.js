@@ -138,12 +138,17 @@ pjs.getCookie = function(cname) {
 //mouse event listeners
 pjs.mouseX = 0;
 pjs.mouseY = 0;
+pjs.mouseButtons = [];
 pjs.mouseMoved = function(){
 	throw new Error("mouseMoved is not defined");
 }
-pjs.mouseClicked = function(button){
+pjs.mouseClicked = function(e){
 	throw new Error("mouseClicked is not defined");
 }
+pjs.mouseReleased = function(e){
+	throw new Error("mouseReleased is not defined");	
+}
+pjs.mouseReleasedTemplate = pjs.mouseReleased;
 pjs.mouseTemplate = pjs.mouseMoved;
 pjs.mouseClickedTemplate = pjs.mouseClicked;
 pjs.internalMouseListener = function(e){
@@ -153,6 +158,31 @@ pjs.internalMouseListener = function(e){
 	pjs.mouseX = e.clientX;
 	pjs.mouseY = e.clientY;	
 }
+pjs.internalMouseClickListener = function(e){
+	if(pjs.mouseClickedTemplate !== pjs.mouseClicked){
+		mouseClicked(e);
+	}
+	if(pjs.mouseButtons[e.button] !== true){
+		mouseButtons[e.button] = true;	
+	}
+}
+pjs.internalMouseReleaseListener = function(e){
+	if(pjs.mouseReleasedTemple !== pjs.mouseReleased){
+		pjs.mouseReleased(e);	
+	}
+	if(pjs.mouseButtons[e.button] !== false){
+		mouseButtons[e.button] = false;
+	}
+}
+pjs.getMouseButton = function(button){
+	if(pjs.mouseButtons[button]){
+		return true;
+	} else {
+		return false;
+	}
+}
+document.addEventListener("mouseup", pjs.internalMouseReleaseListener);
+document.addEventListener("mousedown", pjs.internalMouseClickListener);
 document.addEventListener("mousemove", pjs.internalMouseListener);
 pjs.prototype.getMouseOffset = function(){
 	return {
@@ -217,12 +247,6 @@ pjs.loadEventListeners = function(){
 		pjs.template3 = null;
 	} else if(pjs.debug){
 		console.log("draw has not been defined");
-	}
-	if(pjs.mouseClicked !== pjs.mouseClickedTemplate){
-		document.addEventListener("mousedown", pjs.mouseClicked);
-		pjs.mouseClickedTemplate = null;
-	} else if(pjs.debug){
-		console.log("mouseClicked has not been defined");
 	}
 	window.removeEventListener("load", pjs.loadEventListeners);
 	pjs.loadEventListenerIsActive = false;
