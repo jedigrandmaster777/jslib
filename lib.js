@@ -110,15 +110,15 @@ pjs.prototype.noFill = function(){
 
 //utilities
 pjs.random = function(min, max){
-  min = Math.ceil(min);
+	min = Math.ceil(min);
 	max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min) + min);
+	return Math.floor(Math.random() * (max - min) + min);
 }
 pjs.setCookie = function(cname, cvalue, exdays){
- 	const d = new Date();
-  d.setTime(d.getTime() + (exdays*24*60*60*1000));
-  let expires = "expires="+ d.toUTCString();
-  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+	const d = new Date();
+	d.setTime(d.getTime() + (exdays*24*60*60*1000));
+	let expires = "expires="+ d.toUTCString();
+	document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 pjs.getCookie = function(cname) {
 	let name = cname + "=";
@@ -152,26 +152,26 @@ pjs.mouseReleasedTemplate = pjs.mouseReleased;
 pjs.mouseTemplate = pjs.mouseMoved;
 pjs.mouseClickedTemplate = pjs.mouseClicked;
 pjs.internalMouseListener = function(e){
+	pjs.mouseX = e.clientX;
+	pjs.mouseY = e.clientY;	
 	if(pjs.mouseTemplate !== pjs.mouseMoved){ 
 		pjs.mouseMoved();
 	}
-	pjs.mouseX = e.clientX;
-	pjs.mouseY = e.clientY;	
 }
 pjs.internalMouseClickListener = function(e){
-	if(pjs.mouseClickedTemplate !== pjs.mouseClicked){
-		pjs.mouseClicked(e);
-	}
 	if(pjs.mouseButtons[e.button] !== true){
 		pjs.mouseButtons[e.button] = true;	
 	}
+	if(pjs.mouseClickedTemplate !== pjs.mouseClicked){
+		pjs.mouseClicked(e);
+	}
 }
 pjs.internalMouseReleaseListener = function(e){
-	if(pjs.mouseReleasedTemplate !== pjs.mouseReleased){
-		pjs.mouseReleased(e);	
-	}
 	if(pjs.mouseButtons[e.button] !== false){
 		pjs.mouseButtons[e.button] = false;
+	}
+	if(pjs.mouseReleasedTemplate !== pjs.mouseReleased){
+		pjs.mouseReleased(e);	
 	}
 }
 pjs.getMouseButton = function(button){
@@ -203,19 +203,19 @@ pjs.template2 = pjs.keyReleased;
 pjs.keys = [];
 
 pjs.internalKeyPressListener = function(e){
-	if(pjs.keyPressed !== pjs.template){
-		pjs.keyPressed(e);
-	}
 	if(pjs.keys[e.key] !== true){
 		pjs.keys[e.key] = true;
 	}
+	if(pjs.keyPressed !== pjs.template){
+		pjs.keyPressed(e);
+	}
 }
 pjs.internalKeyReleaseListener = function(e){
-	if(pjs.keyReleased !== pjs.template2){
-		pjs.keyReleased(e);
-	}
 	if(pjs.keys[e.key] !== false){
 		pjs.keys[e.key] = false;
+	}
+	if(pjs.keyReleased !== pjs.template2){
+		pjs.keyReleased(e);
 	}
 }
 document.addEventListener("keydown", pjs.internalKeyPressListener);
