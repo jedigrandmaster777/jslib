@@ -227,16 +227,13 @@ pjs.getKey = function(key){
 		return false;
 	}
 }
-//event listeners
+
+//Draw function
 
 pjs.draw = function(){
 	throw new Error("draw has not been defined");
 }
-
-//making event listeners work
-pjs.debug = false;
 pjs.template3 = pjs.draw;
-
 pjs.drawId = null;
 
 pjs.loadEventListenerIsActive = true;
@@ -244,11 +241,8 @@ pjs.loadEventListenerIsActive = true;
 pjs.loadEventListeners = function(){
 	if(pjs.draw !== pjs.template3){
 		pjs.drawId = setInterval(pjs.draw, 33);
-		pjs.template3 = null;
-	} else if(pjs.debug){
-		console.log("draw has not been defined");
 	}
-	window.removeEventListener("load", pjs.loadEventListeners);
+	window.removeEventListener("load", pjs.loadEventListeners); //these are probably not necessary 
 	pjs.loadEventListenerIsActive = false;
 }
 
@@ -259,12 +253,13 @@ pjs.selfDestruct = function(){
 	if(pjs.drawId !== null){
 		clearInterval(pjs.drawId);
 	}
-	if(pjs.template === null){
-		document.removeEventListener("keypress", pjs.keyPressed);
-	}
-	if(pjs.template2 === null){
-		document.removeEventListener("keyup", pjs.keyReleased);
-	}
+	document.removeEventListener("mouseup", pjs.internalMouseReleaseListener);
+	document.removeEventListener("mousedown", pjs.internalMouseClickListener);
+	document.removeEventListener("mousemove", pjs.internalMouseListener);
+	
+	document.removeEventListener("keydown", pjs.internalKeyPressListener);
+	document.removeEventListener("keyup", pjs.internalKeyReleaseListener);
+	
 	if(pjs.loadEventListenerIsActive === true){
 		window.removeEventListener("load", pjs.loadEventListeners);
 		pjs.loadEventListenerIsActive = false; //probably not necessary 
