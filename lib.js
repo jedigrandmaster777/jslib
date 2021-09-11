@@ -160,18 +160,18 @@ pjs.internalMouseListener = function(e){
 }
 pjs.internalMouseClickListener = function(e){
 	if(pjs.mouseClickedTemplate !== pjs.mouseClicked){
-		mouseClicked(e);
+		pjs.mouseClicked(e);
 	}
 	if(pjs.mouseButtons[e.button] !== true){
 		mouseButtons[e.button] = true;	
 	}
 }
 pjs.internalMouseReleaseListener = function(e){
-	if(pjs.mouseReleasedTemple !== pjs.mouseReleased){
+	if(pjs.mouseReleasedTemplate !== pjs.mouseReleased){
 		pjs.mouseReleased(e);	
 	}
 	if(pjs.mouseButtons[e.button] !== false){
-		mouseButtons[e.button] = false;
+		pjs.mouseButtons[e.button] = false;
 	}
 }
 pjs.getMouseButton = function(button){
