@@ -20,7 +20,7 @@ pjs.createCanvas = function(){
 	var newCanvas = document.createElement("canvas");
 	newCanvas.height = 400;
 	newCanvas.width = 400;
-	newCanvas.style = "display: inline;border:1px solid #000000;";
+	newCanvas.style = "border:1px solid #000000;";
 
 	document.body.appendChild(newCanvas);
 	return new pjs(newCanvas);
