@@ -163,7 +163,7 @@ pjs.internalMouseClickListener = function(e){
 		pjs.mouseClicked(e);
 	}
 	if(pjs.mouseButtons[e.button] !== true){
-		mouseButtons[e.button] = true;	
+		pjs.mouseButtons[e.button] = true;	
 	}
 }
 pjs.internalMouseReleaseListener = function(e){
