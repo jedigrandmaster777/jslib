@@ -82,21 +82,21 @@ pjs.prototype.line = function(x1, y1, x2, y2){//should be optimized
 }
 pjs.prototype.background = function(r, g, b){
 	this.prevfill = this.ctx.fillStyle;
-	this.ctx.fillStyle = "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);//confirm this works
-	this.ctx.fillRect(0, 0, this.canvas.height, this.canvas.width);
+	this.ctx.fillStyle = "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+	this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 	this.ctx.fillStyle = this.prevfill;
 }
 pjs.prototype.fill = function(r, g, b){
 	if(this.dofill !== true){
 		this.dofill = true; 
 	}
-	this.ctx.fillStyle = "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);//confirm this works
+	this.ctx.fillStyle = "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 pjs.prototype.stroke = function(r, g, b){
 	if(this.dostroke !== true){
 		this.dostroke = true;
 	}
-	this.ctx.strokeStyle = "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);//confirm this works
+	this.ctx.strokeStyle = "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
 pjs.prototype.strokeWeight = function(weight){
 	this.ctx.lineWidth = weight;
