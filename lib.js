@@ -209,8 +209,12 @@ pjs.template = pjs.keyPressed;
 pjs.template2 = pjs.keyReleased;
 
 pjs.keys = [];
+pjs.keysAlreadyPressed = [];
 
 pjs.internalKeyPressListener = function(e){
+	if(pjs.keys[e.key] === null){
+		pjs.keysAlreadyPressed.push(e.key);	
+	}
 	if(pjs.keys[e.key] !== true){
 		pjs.keys[e.key] = true;
 	}
@@ -235,7 +239,14 @@ pjs.getKey = function(key){
 		return false;
 	}
 }
-
+pjs.keyIsPressed = function(){
+	for(var i = 0; i < pjs.keysAlreadyPressed.length; i++)[
+		if(pjs.keys[pjs.keysAlreadyPressed[i]]){ //not a great solution
+			return true;	
+		}
+	}
+	return false;
+}
 //Draw function
 
 pjs.draw = function(){
