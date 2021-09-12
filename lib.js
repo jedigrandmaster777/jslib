@@ -240,7 +240,7 @@ pjs.getKey = function(key){
 	}
 }
 pjs.keyIsPressed = function(){
-	for(var i = 0; i < pjs.keysAlreadyPressed.length; i++)[
+	for(var i = 0; i < pjs.keysAlreadyPressed.length; i++){
 		if(pjs.keys[pjs.keysAlreadyPressed[i]]){ //not a great solution
 			return true;	
 		}
