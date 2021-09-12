@@ -182,8 +182,8 @@ pjs.getMouseButton = function(button){
 	}
 }
 pjs.mouseIsPressed = function(){
-	for(var i = 0; i < mouseButtons.length; i++){
-		if(mouseButtons[i]){
+	for(var i = 0; i < pjs.mouseButtons.length; i++){
+		if(pjs.mouseButtons[i]){
 			return true;	
 		}
 	}
