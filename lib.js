@@ -181,6 +181,14 @@ pjs.getMouseButton = function(button){
 		return false;
 	}
 }
+pjs.mouseIsPressed = function(){
+	for(var i = 0; i < mouseButtons.length; i++){
+		if(mouseButtons[i]){
+			return true;	
+		}
+	}
+	return false;
+}
 document.addEventListener("mouseup", pjs.internalMouseReleaseListener);
 document.addEventListener("mousedown", pjs.internalMouseClickListener);
 document.addEventListener("mousemove", pjs.internalMouseListener);
