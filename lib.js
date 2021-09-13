@@ -16,10 +16,10 @@ var pjs = function(id){
 	this.dofill = true;
 }
 
-pjs.createCanvas = function(){
+pjs.createCanvas = function(width = 400, height = 400){
 	var newCanvas = document.createElement("canvas");
-	newCanvas.height = 400;
-	newCanvas.width = 400;
+	newCanvas.height = height;
+	newCanvas.width = width;
 	newCanvas.style = "border:1px solid #000000;";
 
 	document.body.appendChild(newCanvas);
