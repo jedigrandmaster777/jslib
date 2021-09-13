@@ -217,6 +217,8 @@ pjs.internalKeyPressListener = function(e){
 	}
 	if(pjs.keys[e.key] !== true){
 		pjs.keys[e.key] = true;
+	} else {
+		return;
 	}
 	if(pjs.keyPressed !== pjs.template){
 		pjs.keyPressed(e);
