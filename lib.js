@@ -217,6 +217,8 @@ pjs.internalKeyPressListener = function(e){
 	}
 	if(pjs.keys[e.key] !== true){
 		pjs.keys[e.key] = true;
+	} else {
+		return; //should prevent key pressed from being called repeatedly
 	}
 	if(pjs.keyPressed !== pjs.template){
 		pjs.keyPressed(e);
