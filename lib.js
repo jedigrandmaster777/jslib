@@ -1,4 +1,4 @@
-var pjs = function(id){
+var pjs = function(id, autoExpanding = false){
 	if(typeof id === "string"){
 		this.canvas = document.getElementById(id);
 	} else if(typeof id === "object"){
@@ -12,16 +12,17 @@ var pjs = function(id){
 
 	this.ctx.fillStyle = "#FFFFFF";
 	
+	this.autoExpanding = autoExpanding;
+	
 	this.dostroke = true;
 	this.dofill = true;
 }
 
-pjs.createCanvas = function(width = 400, height = 400){
+pjs.createCanvas = function(width = 400, height = 400, style = "border:1px solid #000000;"){
 	var newCanvas = document.createElement("canvas");
 	newCanvas.height = height;
 	newCanvas.width = width;
-	newCanvas.style = "border:1px solid #000000;";
-
+	newCanvas.style = style;
 	document.body.appendChild(newCanvas);
 	return new pjs(newCanvas);
 }
@@ -31,6 +32,20 @@ pjs.prototype.ellipse = function(x, y, width, height){//should be optimized
 	if(this.dostroke === false && this.dofill === false){
 		console.log("Error: both stroke and fill are turned off");
 		return;
+	}
+	if(this.autoExpanding){ //this code may expand the canvas too far
+		if(x > this.canvas.width){
+			this.canvas.width = x;
+		}
+		if(x + width > this.canvas.width){
+			this.canvas.width = x + width;
+		}
+		if(y > this.canvas.height){
+			this.canvas.height = y;
+		}
+		if(y + height > this.canvas.height){
+			this.canvas.height = y + height;
+		}
 	}
 	this.ctx.beginPath();
 	this.ctx.ellipse(x, y, width, height, Math.PI / 4, 0, 2 * Math.PI);
@@ -45,6 +60,26 @@ pjs.prototype.triangle = function(x1, y1, x2, y2, x3, y3){// should be optimized
 	if(this.dostroke === false && this.dofill === false){
 		console.log("Error: both stroke and fill are turned off");
 		return;
+	}
+	if(this.autoExpanding){
+		if(x1 > this.canvas.width){
+			this.canvas.width = x1;
+		}
+		if(x2 > this.canvas.width){
+			this.canvas.width = x2;
+		}
+		if(x3 > this.canvs.width){
+			this.canvas.width = x3;
+		}
+		if(y1 > this.canvas.height){
+			this.canvas.height = y1;
+		}
+		if(y2 > this.canvas.height){
+			this.canvas.height = y2;
+		}
+		if(y3 > this.canvas.height){
+			this.canvas.height = y3;
+		}
 	}
 	this.ctx.beginPath();
 	this.ctx.moveTo(x1, y1);
@@ -63,6 +98,20 @@ pjs.prototype.rect = function(x, y, width, height){
 		console.log("Error: both stroke and fill are turned off");
 		return;
 	}
+	if(this.autoExpanding){
+		if(x > this.canvas.width){
+			this.canvas.width = x;
+		}
+		if(x + width > this.canvas.width){
+			this.canvas.width = x + width;
+		}
+		if(y > this.canvas.height){
+			this.canvas.height = y;
+		}
+		if(y + height > this.canvas.height){
+			this.canvas.height = y + height;
+		}
+	}
 	if(this.dofill){
 		this.ctx.fillRect(x, y, width, height);
 	}
@@ -74,6 +123,20 @@ pjs.prototype.line = function(x1, y1, x2, y2){//should be optimized
 	if(this.dostroke === false){
 		console.log("Error: stroke is turned off but you are attempting to draw a line");
 		return;
+	}
+	if(this.autoExpanding){
+		if(x1 > this.canvas.width){
+			this.canvas.width = x1;
+		}
+		if(x2 > this.canvas.width){
+			this.canvas.width = x2;
+		}
+		if(y1 > this.canvas.height){
+			this.canvas.height = y1;
+		}
+		if(y2 > this.canvas.height){
+			this.canvas.height = y2;
+		}
 	}
 	this.ctx.beginPath();
 	this.ctx.moveTo(x1, y1);
@@ -269,6 +332,17 @@ pjs.loadEventListeners = function(){
 
 window.addEventListener("load", pjs.loadEventListeners); //not the best way of doing things, but it works
 
+pjs.loop = function(){
+	if(pjs.draw !== pjs.template3 && pjs.drawId === null){
+		pjs.drawId = setInterval(pjs.draw, 33);
+	}
+}
+pjs.noLoop = function(){
+	if(pjs.drawId !== null){
+		clearInterval(pjs.drawId);
+		pjs.drawId = null;
+	}
+}
 //update this at some point
 pjs.selfDestruct = function(){
 	if(pjs.drawId !== null){
