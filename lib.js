@@ -33,7 +33,7 @@ pjs.prototype.ellipse = function(x, y, width, height){//should be optimized
 		console.log("Error: both stroke and fill are turned off");
 		return;
 	}
-	if(this.autoExpanding){
+	if(this.autoExpanding){ //this code may expand the canvas too far
 		if(x > this.canvas.width){
 			this.canvas.width = x;
 		}
@@ -60,6 +60,26 @@ pjs.prototype.triangle = function(x1, y1, x2, y2, x3, y3){// should be optimized
 	if(this.dostroke === false && this.dofill === false){
 		console.log("Error: both stroke and fill are turned off");
 		return;
+	}
+	if(this.autoExpanding){
+		if(x1 > this.canvas.width){
+			this.canvas.width = x1;
+		}
+		if(x2 > this.canvas.width){
+			this.canvas.width = x2;
+		}
+		if(x3 > this.canvs.width){
+			this.canvas.width = x3;
+		}
+		if(y1 > this.canvas.height){
+			this.canvas.height = y1;
+		}
+		if(y2 > this.canvas.height){
+			this.canvas.height = y2;
+		}
+		if(y3 > this.canvas.height){
+			this.canvas.height = y3;
+		}
 	}
 	this.ctx.beginPath();
 	this.ctx.moveTo(x1, y1);
@@ -103,6 +123,20 @@ pjs.prototype.line = function(x1, y1, x2, y2){//should be optimized
 	if(this.dostroke === false){
 		console.log("Error: stroke is turned off but you are attempting to draw a line");
 		return;
+	}
+	if(this.autoExpanding){
+		if(x1 > this.canvas.width){
+			this.canvas.width = x1;
+		}
+		if(x2 > this.canvas.width){
+			this.canvas.width = x2;
+		}
+		if(y1 > this.canvas.height){
+			this.canvas.height = y1;
+		}
+		if(y2 > this.canvas.height){
+			this.canvas.height = y2;
+		}
 	}
 	this.ctx.beginPath();
 	this.ctx.moveTo(x1, y1);
