@@ -332,6 +332,17 @@ pjs.loadEventListeners = function(){
 
 window.addEventListener("load", pjs.loadEventListeners); //not the best way of doing things, but it works
 
+pjs.loop = function(){
+	if(pjs.draw !== pjs.template3 && pjs.drawID === null){
+		pjs.drawId = setInterval(pjs.draw, 33);
+	}
+}
+pjs.noLoop = function(){
+	if(pjs.drawID !== null){
+		clearInterval(pjs.drawID);
+		pjs.drawID = null;
+	}
+}
 //update this at some point
 pjs.selfDestruct = function(){
 	if(pjs.drawId !== null){
