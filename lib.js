@@ -1,4 +1,4 @@
-var pjs = function(id){
+var pjs = function(id, autoExpanding = false){
 	if(typeof id === "string"){
 		this.canvas = document.getElementById(id);
 	} else if(typeof id === "object"){
@@ -12,16 +12,17 @@ var pjs = function(id){
 
 	this.ctx.fillStyle = "#FFFFFF";
 	
+	this.autoExpanding = autoExpanding;
+	
 	this.dostroke = true;
 	this.dofill = true;
 }
 
-pjs.createCanvas = function(width = 400, height = 400){
+pjs.createCanvas = function(width = 400, height = 400, style = "border:1px solid #000000;"){
 	var newCanvas = document.createElement("canvas");
 	newCanvas.height = height;
 	newCanvas.width = width;
-	newCanvas.style = "border:1px solid #000000;";
-
+	newCanvas.style = style;
 	document.body.appendChild(newCanvas);
 	return new pjs(newCanvas);
 }
@@ -31,6 +32,20 @@ pjs.prototype.ellipse = function(x, y, width, height){//should be optimized
 	if(this.dostroke === false && this.dofill === false){
 		console.log("Error: both stroke and fill are turned off");
 		return;
+	}
+	if(this.autoExpanding){
+		if(x > this.canvas.width){
+			this.canvas.width = x;
+		}
+		if(x + width > this.canvas.width){
+			this.canvas.width = x + width;
+		}
+		if(y > this.canvas.height){
+			this.canvas.height = y;
+		}
+		if(y + height > this.canvas.height){
+			this.canvas.height = y + height;
+		}
 	}
 	this.ctx.beginPath();
 	this.ctx.ellipse(x, y, width, height, Math.PI / 4, 0, 2 * Math.PI);
@@ -62,6 +77,20 @@ pjs.prototype.rect = function(x, y, width, height){
 	if(this.dostroke === false && this.dofill === false){
 		console.log("Error: both stroke and fill are turned off");
 		return;
+	}
+	if(this.autoExpanding){
+		if(x > this.canvas.width){
+			this.canvas.width = x;
+		}
+		if(x + width > this.canvas.width){
+			this.canvas.width = x + width;
+		}
+		if(y > this.canvas.height){
+			this.canvas.height = y;
+		}
+		if(y + height > this.canvas.height){
+			this.canvas.height = y + height;
+		}
 	}
 	if(this.dofill){
 		this.ctx.fillRect(x, y, width, height);
