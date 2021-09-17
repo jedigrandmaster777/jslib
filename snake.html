@@ -1,0 +1,149 @@
+ <!DOCTYPE HTML>
+<html>
+	<head>
+		<script src="https://jedigrandmaster777.github.io/jslib/lib.js"></script>
+		<title>Snake</title>
+		<style>
+			#canvas-container {
+				text-align: center;
+			}
+			canvas {
+				display: inline;
+				border:1px solid #000000;
+			}
+			p {
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<p id = highscorebox>High score: 0</p>
+		<p id = textbox>Score: 0</p>
+		<div id="canvas-container">
+		<canvas id="myCanvas" width="400" height="400"></canvas>
+		</div>
+		<script>
+			var textbox = document.getElementById("textbox");
+			var highscorebox = document.getElementById("highscorebox");
+
+			var canvas = new pjs("myCanvas");
+
+			if(pjs.getCookie("highscore") !== ""){
+				highscorebox.innerHTML = "High score: " + pjs.getCookie("highscore");
+			} else {
+				pjs.setCookie("highscore", 0, 300);
+			}
+			const snakeSize = 10;
+			const speed = snakeSize;
+			var prevdirection;
+			var bodyPart = function(x, y){ 
+				this.x = x;
+				this.y = y;
+				this.timeAlive = 0;
+			}
+			bodyPart.prototype.draw = function(){
+				canvas.fill(0, 255, 17);
+				canvas.rect(this.x, this.y, snakeSize, snakeSize);
+				this.timeAlive++;
+			}
+			
+			var i;
+			var hasPressedKey = false;
+			var queuedKey;
+			var objects = [];
+			var apple = {x: pjs.random(2, (400/snakeSize) - 2) * snakeSize, y: pjs.random(2, (400/snakeSize) - 2) * snakeSize};
+			var score = 0;
+			
+			var direction = 0;
+			var headX = 200;
+			var headY = 200;
+			//document.addEventListener('keypress', keyPressed);
+			pjs.keyPressed = function(e) {
+				if(hasPressedKey === false){
+					if((e.key === "w" || e.keyCode === 38) && direction !== 0 && prevdirection !== 0){
+						prevdirection = direction;
+						direction = 1;
+					}
+					if((e.key === "s" || e.keyCode === 40) && direction !== 1 && prevdirection !== 1){
+						prevdirection = direction;
+						direction = 0;
+					}
+					if((e.key === "a" || e.keyCode === 37) && direction !== 2 && prevdirection !== 2){
+						prevdirection = direction;
+						direction = 3;
+					}
+					if((e.key === "d" || e.keyCode === 39) && direction !== 3 && prevdirection !== 3){
+						prevdirection = direction;
+						direction = 2;
+					}
+					hasPressedKey = true;
+				} else {
+					queuedKey = e.key;
+				}
+			}
+			var tailSize = 20;
+			pjs.draw = function(){
+				if(score > pjs.getCookie("highscore")){
+					pjs.setCookie("highscore", score, 300);
+					highscorebox.innerHTML = "High score: " + pjs.getCookie("highscore");
+				}
+				hasPressedKey = false;
+				if(queuedKey !== ""){
+					pjs.keyPressed({key: queuedKey}); //unsafe
+					queuedKey = "";
+				}
+				prevdirection = null;
+				canvas.background(255, 255, 255);
+				if(direction === 0){
+					headY += speed;
+				} 
+				if(direction === 1){
+					headY -= speed;
+				}
+				if(direction === 2){
+					headX += speed;
+				} 
+				if(direction === 3){
+					headX -= speed;
+				}
+				if(headX > 400 || headX < 0 || headY > 400 || headY < 0){
+					objects = [];
+					headX = 200;
+					headY = 200;
+					tailSize = 20;
+					score = 0;
+					textbox.innerHTML = "Score: " + score;
+				}
+				if(headX === apple.x && headY === apple.y){
+					tailSize += 5;
+					score++;
+					textbox.innerHTML = "Score: " + score;
+					apple = {x: pjs.random(2, (400/snakeSize) - 2) * snakeSize, y: pjs.random(2, (400/snakeSize) - 2) * snakeSize};
+				}
+
+				i = 0;
+				while(i < objects.length){
+					if(objects[i].timeAlive > tailSize){
+						objects.splice(i, 1);
+					}
+					objects[i].draw();
+					objects[i].timeAlive++;
+					if(objects[i].x === headX && objects[i].y === headY){
+						objects = [];
+						headX = 200;
+						headY = 200;
+						tailSize = 20;
+						score = 0;
+						textbox.innerHTML = "Score: " + score;
+					}
+					i++;
+				}
+				objects.push(new bodyPart(headX, headY));
+				canvas.fill(0, 255, 17);
+				canvas.rect(headX, headY, snakeSize, snakeSize);
+				canvas.fill(255, 0, 0);
+				canvas.rect(apple.x, apple.y, snakeSize, snakeSize);
+			}
+		</script>
+	</body>
+</html>

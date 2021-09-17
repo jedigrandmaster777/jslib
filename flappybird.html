@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<style>
+			#canvas-container {
+			width: 100%;
+			text-align:center;
+			}
+			canvas {
+				display: inline;
+				border:1px solid #000000;
+			}
+			p {
+				text-align: center;
+			}
+		</style>
+		<script src="https://jedigrandmaster777.github.io/jslib/lib.js"></script>
+	</head>
+	<body>
+		<p id="scorebox"></p>
+		<div id="canvas-container">
+		<canvas id="myCanvas" width="400" height="400"></canvas>
+		</div>
+		<script>
+			var canvas = new pjs("myCanvas");
+
+
+			var birdY = 200;
+			var pipeY = 200;
+			var pipeX = 400;
+			var motion = 0;
+			var paused = true;
+			var score = 0;
+			document.getElementById("scorebox").innerHTML = "Score: " + score;
+			pjs.keyPressed = function(e) {
+				if(paused){
+					paused = false;
+					document.getElementById("scorebox").innerHTML = "Score: " + score;
+				}
+				motion = 8;
+			}
+			canvas.background(255, 255, 255);
+			canvas.stroke(3);
+			canvas.fill(0, 255, 0);
+			canvas.rect(pipeX, pipeY, 50, 400);
+			canvas.rect(pipeX, 0, 50, pipeY - 75);
+			canvas.fill(255, 255, 0);
+			canvas.stroke(2);
+			canvas.ellipse(50, birdY, 10, 10);
+			pjs.draw = function(){
+				if(paused === false){
+					canvas.background(255, 255, 255);
+					canvas.stroke(3);
+					canvas.fill(0, 255, 0);
+					canvas.rect(pipeX, pipeY, 50, 400);
+					canvas.rect(pipeX, 0, 50, pipeY - 75);
+					canvas.fill(255, 255, 0);
+					canvas.stroke(2);
+					canvas.ellipse(50, birdY, 10, 10);
+					birdY -= motion;
+					if(motion > -20){
+						motion--;
+					}
+					if(pipeX > -51){
+						pipeX -= 7;
+					} else {
+						pipeX = 400;
+						pipeY = pjs.random(50, 350);
+						score++;
+						document.getElementById("scorebox").innerHTML = "Score: " + score;
+					}
+					if(birdY > 400){
+						birdY = 200;
+						pipeY = 200;
+						pipeX = 400;
+						motion = 0;
+						score = 0;
+						paused = true;
+					}
+					if(pipeX <= 50 && pipeX + 50 >= 50){
+						if(birdY > pipeY){
+							birdY = 200;
+							pipeY = 200;
+							pipeX = 400;
+							motion = 0;
+							score = 0;
+							paused = true;
+						}
+						if(birdY < pipeY - 75){
+							birdY = 200;
+							pipeY = 200;
+							pipeX = 400;
+							motion = 0;
+							score = 0;
+							paused = true;
+						}
+					}
+				}
+			}
+		</script>
+	</body>
+</html>
