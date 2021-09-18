@@ -1,10 +1,19 @@
 <html>
 <head>
 <script src="../lib.js"></script>
+<style>
+#canvas-container {
+	text-align:center;
+}
+canvas {
+	display: inline;
+	border:1px solid #000000;
+}
+</style>
 </head>
 <body>
 	<a href="../index.html">Back</a>
-<canvas height="400" width="400" style="border: 1px solid rgb(0, 0, 0);" id="myCanvas"></canvas>
+<canvas height="400" width="400" id="myCanvas"></canvas>
 <script>
 	var canvas = new pjs("myCanvas");
 
