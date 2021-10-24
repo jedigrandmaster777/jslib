@@ -135,6 +135,13 @@ pjs.getCookie = function(cname) {
 	}
 	return "";
 }
+
+pjs.calcPosOffset = function(r, theta){
+	return {
+		x: r * Math.cos(theta),
+	    	y: r * Math.sin(theta)
+	}
+}
 //mouse event listeners
 pjs.mouseX = 0;
 pjs.mouseY = 0;
