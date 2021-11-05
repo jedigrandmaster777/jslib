@@ -142,6 +142,16 @@ pjs.calcPosOffset = function(r, theta){
 	    	y: r * Math.sin(theta)
 	}
 }
+pjs.calcRotOffset = function(x, y){
+	var theta = Math.atan(y/x);
+	if(x > 0){
+		theta += Math.PI;
+	}
+
+	var r = y/(Math.sin(theta));
+	r = -r;
+	return {r, theta};
+}
 //mouse event listeners
 pjs.mouseX = 0;
 pjs.mouseY = 0;
