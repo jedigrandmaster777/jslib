@@ -7,7 +7,7 @@ var pjs = function(id){
 	try{
 		this.ctx = this.canvas.getContext("2d");
 	} catch(error){
-		throw new Error("Supplied element is not a canvas");
+		throw new TypeError("Supplied element is not a canvas");
 	}
 
 	this.ctx.fillStyle = "#FFFFFF";
@@ -29,7 +29,7 @@ pjs.createCanvas = function(width = 400, height = 400){
 //drawing 
 pjs.prototype.ellipse = function(x, y, width, height){//should be optimized
 	if(this.dostroke === false && this.dofill === false){
-		console.log("Error: both stroke and fill are turned off");
+		console.warn("both stroke and fill are turned off");
 		return;
 	}
 	this.ctx.beginPath();
@@ -43,7 +43,7 @@ pjs.prototype.ellipse = function(x, y, width, height){//should be optimized
 }
 pjs.prototype.triangle = function(x1, y1, x2, y2, x3, y3){// should be optimized
 	if(this.dostroke === false && this.dofill === false){
-		console.log("Error: both stroke and fill are turned off");
+		console.warn("both stroke and fill are turned off");
 		return;
 	}
 	this.ctx.beginPath();
@@ -60,7 +60,7 @@ pjs.prototype.triangle = function(x1, y1, x2, y2, x3, y3){// should be optimized
 }
 pjs.prototype.rect = function(x, y, width, height){
 	if(this.dostroke === false && this.dofill === false){
-		console.log("Error: both stroke and fill are turned off");
+		console.warn("both stroke and fill are turned off");
 		return;
 	}
 	if(this.dofill){
@@ -72,7 +72,7 @@ pjs.prototype.rect = function(x, y, width, height){
 }
 pjs.prototype.line = function(x1, y1, x2, y2){//should be optimized
 	if(this.dostroke === false){
-		console.log("Error: stroke is turned off but you are attempting to draw a line");
+		console.warn("stroke is turned off but you are attempting to draw a line");
 		return;
 	}
 	this.ctx.beginPath();
